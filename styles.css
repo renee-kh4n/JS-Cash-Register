@@ -1,0 +1,21 @@
+body{
+    height: 100vh;
+    color:beige;
+    background-color: rgb(22, 21, 30);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h2, button{
+    text-align: center;
+}
+
+.box{
+    height: 50px;
+    border: 1px solid black;
+    width: 75%;
+    margin: auto;
+    padding: auto;
+}
+
