@@ -10,3 +10,22 @@ let cid = [
   ["TWENTY", 60],
   ["ONE HUNDRED", 100]
 ];
+
+const userCash = document.getElementById("cash");
+const changeResult = document.getElementById("change-due");
+const purchaseBtn = document.getElementById("purchase-btn");
+const priceVal = document.getElementById("price-val");
+
+priceVal.textContent = `$${price}`;
+
+
+function changeCalculator(userCash){
+
+  if(userCash<price){
+    alert("Customer does not have enough money to purchase the item");
+  } else if(userCash==price){
+    changeResult.textContent = "No change due - customer paid with exact cash"
+  }
+}
+
+purchaseBtn.addEventListener("click", () => changeCalculator(userCash.value));
