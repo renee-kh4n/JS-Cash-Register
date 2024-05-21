@@ -1,4 +1,5 @@
-let price = 1.87;
+let price = 3.26;
+price = 19.20;
 let cid = [
   ["PENNY", 1.01],     //0.01
   ["NICKEL", 2.05],    //0.05
@@ -10,6 +11,22 @@ let cid = [
   ["TWENTY", 60],      //20
   ["ONE HUNDRED", 100] //100
 ];
+
+let cidBase = [
+  ["PENNY", 0.01],     //0.01
+  ["NICKEL", 0.05],    //0.05
+  ["DIME", 0.1],       //0.10
+  ["QUARTER", 0.25],   //0.25
+  ["ONE", 1],          //1
+  ["FIVE", 5],         //5
+  ["TEN", 10],         //10
+  ["TWENTY", 20],      //20
+  ["ONE HUNDRED", 100] //100
+];
+
+
+// // cid tests:
+cid = [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]];
 
 
 
@@ -27,8 +44,9 @@ const status3 = "Status: OPEN"
 
 
 function changeCalculator(userCash){
-
+  const changeArr = [];
   cid = cid.reverse();
+  cidBase = cidBase.reverse();
 
   if(userCash<price){
     alert("Customer does not have enough money to purchase the item");
@@ -36,38 +54,57 @@ function changeCalculator(userCash){
     changeResult.textContent = "No change due - customer paid with exact cash"
   }else{
     let change = userCash - price;
+    console.log(change);
 
     let sumCid = 0;
 
     for(let i = 0; i< cid.length; i++ ){
-      sumCid = sumCid + cid[i][1];
-    }
-    console.log(sumCid);
+      if ( (change - (change%cidBase[i][1])) > cid[i][1]){
+        changeArr[i] = cid[i][1];
+      } else{
+        changeArr[i] = change - (change%cidBase[i][1]);
+      }
 
-    if(sumCid < change){
-      changeResult.textContent = status1;
+      change = parseFloat(change - changeArr[i]).toFixed(2);
+      cid[i][1] = parseFloat(cid[i][1] - changeArr[i]).toFixed(2);
+
+      console.log(change);
+      console.log(changeArr);
+      console.log(changeArr.reduce((partialSum, a) => partialSum + a, 0));
+
     }
 
+    let message;
+
+    if (change > 0){
+      console.log("insufficient");
+      message = status1;
+    }else{
+      if((changeArr.reduce((partialSum, a) => partialSum + a, 0)) > 0){
+        
+      console.log("OPEN");
+        message = status3;
+      }else{
+        
+      console.log("CLOSED");
+        message = status2;
+  
+      }
+
+      for(let i = 0; i< changeArr.length; i++ ){
+        if(changeArr[i] > 0){ 
+          message = message + " " + `${cid[i][0]}: $${changeArr[i]}`;
+        }
+      }
+
+    }
     
+    
+    console.log(message);
+    changeResult.textContent = message;
 
   }
 }
 
 purchaseBtn.addEventListener("click", () => changeCalculator(userCash.value));
 
-
-// let cidBase = [
-//   ["PENNY", 0.01],     //0.01
-//   ["NICKEL", 0.05],    //0.05
-//   ["DIME", 0.1],       //0.10
-//   ["QUARTER", 0.25],   //0.25
-//   ["ONE", 1],          //1
-//   ["FIVE", 5],         //5
-//   ["TEN", 10],         //10
-//   ["TWENTY", 20],      //20
-//   ["ONE HUNDRED", 100] //100
-// ];
-
-
-
-//reference https://www.youtube.com/watch?v=to6z5U8B8aY&t=85s
