@@ -5,6 +5,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 h2, button{
@@ -26,6 +27,13 @@ h2, button{
 button{
     border-radius: 50px;
     color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+}
+
+button:hover{
+    background-color: rgb(80, 75, 122);
+    cursor: pointer;
 }
 
 .box{
