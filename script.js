@@ -28,7 +28,8 @@ const status3 = "Status: OPEN"
 
 function changeCalculator(userCash){
 
-  check(price, userCash, cid)
+  cid = cid.reverse();
+
   if(userCash<price){
     alert("Customer does not have enough money to purchase the item");
   } else if(userCash==price){
@@ -46,6 +47,8 @@ function changeCalculator(userCash){
     if(sumCid < change){
       changeResult.textContent = status1;
     }
+
+    
 
   }
 }
