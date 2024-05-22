@@ -24,11 +24,11 @@ let cidBase = [
 ];
 
 
-// cid tests:
-price = 19.50;
-cid = [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]];
+// // cid tests:
+// price = 19.50;
+// cid = [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]];
 
-cid = [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]];
+// cid = [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]];
 
 
 
@@ -61,19 +61,18 @@ function changeCalculator(userCash){
 
     for(let i = 0; i< cid.length; i++ ){
 
-      change = parseFloat(change).toFixed(2);
-      cidBase[i][1] = parseFloat(cidBase[i][1]).toFixed(2);
-
-      if ( (change - (change%cidBase[i][1])) > cid[i][1]){
-        changeArr[i] = cid[i][1];
+      console.log(`change: ${change}; cidBase[i][1]: ${cidBase[i][1]}`)
+      console.log(`change: ${change}; cid[i][1]: ${cid[i][1]}`)
+      if ( (change - (change % cidBase[i][1])) > cid[i][1]){
+        
+        changeArr[i] = parseFloat((cid[i][1]).toFixed(2));
       } else{
         
-        changeArr[i] = parseFloat((change - (change % cidBase[i][1])).toFixed(2));
-        console.log(`change: ${change}; change%cidBase[i][1]: ${change % cidBase[i][1]}`)
+        changeArr[i] = parseFloat((Math.floor(change / cidBase[i][1])*cidBase[i][1]).toFixed(2));
       }
 
-      // change = parseFloat(change - changeArr[i]).toFixed(2);
-      change = change - changeArr[i];
+      change = parseFloat((change - changeArr[i]).toFixed(2));
+      // change = change - changeArr[i];
       cid[i][1] = cid[i][1] - changeArr[i];
 
       console.log(change);
@@ -83,12 +82,13 @@ function changeCalculator(userCash){
     }
 
     let message;
+    console.log(cid);
 
     if (change > 0){
       console.log("insufficient");
       message = status1;
     }else{
-      if((changeArr.reduce((partialSum, a) => partialSum + a, 0)) > 0){
+      if((cid.reduce((partialSum, a) => partialSum + a[1], 0)) > 0){
         
       console.log("OPEN");
         message = status3;
