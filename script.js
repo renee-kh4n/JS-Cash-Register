@@ -1,5 +1,4 @@
 let price = 3.26;
-price = 19.20;
 let cid = [
   ["PENNY", 1.01],     //0.01
   ["NICKEL", 2.05],    //0.05
@@ -25,8 +24,11 @@ let cidBase = [
 ];
 
 
-// // cid tests:
+// cid tests:
+price = 19.50;
 cid = [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]];
+
+cid = [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]];
 
 
 
@@ -56,17 +58,23 @@ function changeCalculator(userCash){
     let change = userCash - price;
     console.log(change);
 
-    let sumCid = 0;
 
     for(let i = 0; i< cid.length; i++ ){
+
+      change = parseFloat(change).toFixed(2);
+      cidBase[i][1] = parseFloat(cidBase[i][1]).toFixed(2);
+
       if ( (change - (change%cidBase[i][1])) > cid[i][1]){
         changeArr[i] = cid[i][1];
       } else{
-        changeArr[i] = change - (change%cidBase[i][1]);
+        
+        changeArr[i] = parseFloat((change - (change % cidBase[i][1])).toFixed(2));
+        console.log(`change: ${change}; change%cidBase[i][1]: ${change % cidBase[i][1]}`)
       }
 
-      change = parseFloat(change - changeArr[i]).toFixed(2);
-      cid[i][1] = parseFloat(cid[i][1] - changeArr[i]).toFixed(2);
+      // change = parseFloat(change - changeArr[i]).toFixed(2);
+      change = change - changeArr[i];
+      cid[i][1] = cid[i][1] - changeArr[i];
 
       console.log(change);
       console.log(changeArr);
@@ -98,7 +106,6 @@ function changeCalculator(userCash){
       }
 
     }
-    
     
     console.log(message);
     changeResult.textContent = message;
