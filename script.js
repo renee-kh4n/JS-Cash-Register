@@ -56,8 +56,9 @@ function initCashRegContent(){
 
     pieces = Math.ceil(cid[i][1]/cidBase[i][1]);
     const subdiv = document.createElement('div');
+    subdiv.setAttribute('style', 'padding-bottom: 20px')
     subdiv.classList.add('denom-info');
-    subdiv.textContent = `${pieces} pieces (total ammount: $${cid[i][1].toFixed(2)})`;
+    subdiv.textContent = `${pieces} pieces (total ammount: $${Math.abs(cid[i][1]).toFixed(2)})`;
     cashRegContent.appendChild(subdiv);
   }
 }
@@ -78,6 +79,7 @@ function changeCalculator(userCash){
   
   // let cidBackUp = [...cid]; changes in either array will affect the other
   const cidBackUp = JSON.parse(JSON.stringify(cid));
+  cidBackUp.reverse();
   cid = cid.reverse();
   cidBase = cidBase.reverse();
 
@@ -115,27 +117,21 @@ function changeCalculator(userCash){
     let message;
     console.log(cid);
 
-    //ensure PENNY is the first to be displayed
-    if(cid[0][0] !== 'PENNY')
-    {  cid = cid.reverse();
-       cidBase = cidBase.reverse();}
 
     if (change > 0){
       console.log('insufficient');
       message = status1;
       cid = JSON.parse(JSON.stringify(cidBackUp));
-      initCashRegContent();
+
     }else{
       if((cid.reduce((partialSum, a) => partialSum + a[1], 0)) > 0){
         
       console.log('OPEN');
         message = status3;
-        initCashRegContent();
       }else{
         
       console.log('CLOSED');
         message = status2;
-        initCashRegContent();
   
       }
 
@@ -151,6 +147,13 @@ function changeCalculator(userCash){
     changeResult.textContent = message;
 
   }
+
+  
+  //ensure PENNY is the first to be displayed
+  if(cid[0][0] !== 'PENNY')
+    {  cid = cid.reverse();
+        cidBase = cidBase.reverse();}
+  initCashRegContent();
 }
 
 initCashRegContent();
