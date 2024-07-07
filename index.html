@@ -9,20 +9,30 @@
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <h2>CASH REGISTER</h2>
-        <div class="box price-display">
-            <p>Price:</p>
-            <p id="price-val"></p>
-        </div>
-        <div class="box input">
-            <label for="input">Enter cash:</label>
-            <input class="input" name="input" type="number" id="cash" />
-        </div>
-        <button id="purchase-btn">Purchase</button>
-        <div class="box output" id="change-due">
-            
-        </div>
+        <h1>CASH REGISTER</h1>
+        <div class="main-content">
+            <div class="left">
+                <div class="box price-display">
+                    <p>Price:</p>
+                    <p id="price-val"></p>
+                </div>
+                <div class="box input">
+                    <label for="input">Enter cash:</label>
+                    <input class="input" name="input" type="number" id="cash" />
+                </div>
+                <button id="purchase-btn">Purchase</button>
+                <div class="box output" id="change-due">
+                    
+                </div>
+            </div>
 
+            <div class="right">
+                <h3>Contents:</h3>
+                <div>Penny (0.1)</div>
+                <div>8 Pieces</div>
+
+            </div>
+        </div>
         
         <script type="text/javascript" src="./script.js"></script>
     </body>
