@@ -43,22 +43,35 @@ const status1 = 'Status: INSUFFICIENT_FUNDS';
 const status2 = 'Status: CLOSED';
 const status3 = 'Status: OPEN'
 
-function initCashRegContent(){
-  const cashRegContent = document.getElementById('funds-remaining');
+const cashRegContent = document.getElementById('funds-remaining');
 
+
+function initCashRegContent(){
+ 
   for(let i = 0; i<cidBase.length; i++){
     const div = document.createElement('div');
+    div.classList.add('denom-info');
     div.textContent = `${cidBase[i][0]} ($${cidBase[i][1]}) :`;
     cashRegContent.appendChild(div);
 
     pieces = Math.ceil(cid[i][1]/cidBase[i][1]);
     const subdiv = document.createElement('div');
+    subdiv.classList.add('denom-info');
     subdiv.textContent = `${pieces} pieces (total ammount: $${cid[i][1]})`;
     cashRegContent.appendChild(subdiv);
   }
 }
 
 function changeCalculator(userCash){
+  const denomInfo = document.getElementsByClassName('denom-info');
+  
+  const denomInfoArr = Array.from(denomInfo);
+
+  denomInfoArr.forEach( element => {
+    cashRegContent.removeChild(element);
+  });
+  
+
   const changeArr = [];
   cid = cid.reverse();
   cidBase = cidBase.reverse();
@@ -105,10 +118,12 @@ function changeCalculator(userCash){
         
       console.log('OPEN');
         message = status3;
+        initCashRegContent();
       }else{
         
       console.log('CLOSED');
         message = status2;
+        initCashRegContent();
   
       }
 
@@ -121,7 +136,6 @@ function changeCalculator(userCash){
     }
     
     console.log(message);
-    initCashRegContent();
     changeResult.textContent = message;
 
   }
