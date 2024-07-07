@@ -47,7 +47,7 @@ const cashRegContent = document.getElementById('funds-remaining');
 
 
 function initCashRegContent(){
- 
+
   for(let i = 0; i<cidBase.length; i++){
     const div = document.createElement('div');
     div.classList.add('denom-info');
@@ -57,7 +57,7 @@ function initCashRegContent(){
     pieces = Math.ceil(cid[i][1]/cidBase[i][1]);
     const subdiv = document.createElement('div');
     subdiv.classList.add('denom-info');
-    subdiv.textContent = `${pieces} pieces (total ammount: $${cid[i][1]})`;
+    subdiv.textContent = `${pieces} pieces (total ammount: $${cid[i][1].toFixed(2)})`;
     cashRegContent.appendChild(subdiv);
   }
 }
@@ -73,6 +73,11 @@ function changeCalculator(userCash){
   
 
   const changeArr = [];
+
+  
+  
+  // let cidBackUp = [...cid]; changes in either array will affect the other
+  const cidBackUp = JSON.parse(JSON.stringify(cid));
   cid = cid.reverse();
   cidBase = cidBase.reverse();
 
@@ -110,9 +115,16 @@ function changeCalculator(userCash){
     let message;
     console.log(cid);
 
+    //ensure PENNY is the first to be displayed
+    if(cid[0][0] !== 'PENNY')
+    {  cid = cid.reverse();
+       cidBase = cidBase.reverse();}
+
     if (change > 0){
       console.log('insufficient');
       message = status1;
+      cid = JSON.parse(JSON.stringify(cidBackUp));
+      initCashRegContent();
     }else{
       if((cid.reduce((partialSum, a) => partialSum + a[1], 0)) > 0){
         
